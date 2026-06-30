@@ -127,7 +127,7 @@ body {
 .hero-image img {
     width: 430px;
     max-width: 100%;
-    animation: imageanimate 5s ease-in-out infinite alternate;
+    animation: imageanimate 3s ease-in-out infinite alternate;
     transition: transform 0.5s ease;
 }
 
