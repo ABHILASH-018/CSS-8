@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CSS-7 — Button Hover Effects with CSS Transforms
 
 ## About This Project
@@ -76,3 +77,6 @@ CSS-7/
 - HTML5
 - CSS3 (Transforms, Transitions, Flexbox, Grid)
 - Google Fonts (Poppins)
+=======
+# CSS-8
+>>>>>>> 5c53385fae4b002c2517f8dee9e59daf8c6d0d0f
