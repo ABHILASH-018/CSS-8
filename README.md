@@ -1,71 +1,88 @@
-<<<<<<< HEAD
-# CSS-7 — Button Hover Effects with CSS Transforms
+# CSS-8 — Orbit Animation with CSS Keyframes
 
 ## About This Project
 
-This is a simple landing page for **Laundry Wallah**, a fictional laundry service. The main goal of this assignment was to learn how CSS `transform` functions — specifically `scale()` and `rotate()` — can be combined to create engaging button hover effects.
+This is my Laundry Wallah landing page from the previous assignment, but now with a CSS keyframe animation added to the washing machine image. The goal for CSS-8 was to make the image move in a circular orbit path using `@keyframes` and chained `transform` functions.
 
-The page has a header with navigation, a hero section with a call-to-action button, and a footer. The button is where all the transform magic happens.
+The page still has the header, hero section with a call-to-action button, and footer from before. The new part is the washing machine floating in a continuous circular orbit.
 
 ---
 
-## How to Set Up and View
+## How to View It
 
-1. **Download or clone** this repository to your computer.
-2. Make sure all three files are in the same folder:
+1. Download or clone this repo.
+2. Make sure these files are in the same folder:
    - `index.html`
    - `styles.css`
    - `washingmachine.png`
-3. **Open `index.html`** in any web browser (Chrome, Firefox, Edge, etc.) by double-clicking it.
-4. **Hover over the blue "Book a service today!" button** to see the transform effects in action.
-5. **Click and hold** the button to see the `:active` press-down effect.
+3. Open `index.html` in any browser (Chrome, Firefox, Edge).
+4. Watch the washing machine image — it orbits in a smooth circle.
+5. Hover over the image area to see it scale up while still orbiting.
 
-No build tools, servers, or installations needed — it's just plain HTML and CSS.
+No build tools or servers needed, just HTML and CSS.
 
 ---
 
-## What I Learned About CSS Transforms
+## What I Learned About CSS Keyframe Animations
 
-### `scale()` — Making Things Bigger or Smaller
+### The Problem I Had at First
 
-- `scale(1)` keeps the element at its normal size.
-- `scale(1.08)` makes it 8% larger — I used this on hover to make the button feel like it's popping towards you.
-- `scale(0.98)` makes it slightly smaller — I used this on `:active` (when you click and hold) to simulate a button being physically pressed down.
+My first attempt used `translate()` to move the image up, then diagonally, then back down. It looked like it was bobbing around randomly, not orbiting. The feedback I got was that this is NOT orbital motion — it's just shifting the image in cardinal directions.
 
-### `rotate()` — Tilting an Element
+### How Circular Orbit Actually Works
 
-- `rotate(3deg)` tilts the element 3 degrees clockwise.
-- Positive values go clockwise, negative values go counter-clockwise.
-- I kept the rotation small (3 degrees) because anything bigger looks sloppy on a button. It just adds a subtle playful touch.
-
-### Combining Them Together
-
-The key thing I learned is that **you can only have one `transform` property per selector**. If you try to write two separate `transform` lines, the second one will overwrite the first. So to use both, you chain them:
+The trick is chaining three transforms together:
 
 ```css
-transform: scale(1.08) rotate(3deg);
+transform: rotate(Adeg) translateY(-15px) rotate(-Adeg);
 ```
 
-This applies both effects at the same time — the button grows *and* tilts when you hover over it.
+Here's what's happening step by step:
 
-### Making It Smooth with `transition`
+1. `rotate(Adeg)` — rotates the entire coordinate system by angle A. This decides *where* on the circle the image sits.
+2. `translateY(-15px)` — pushes the image 15px along the rotated Y axis. Since the axis itself is rotated, the image ends up at a different point on a circle of radius 15px.
+3. `rotate(-Adeg)` — cancels out the first rotation so the image itself stays upright and doesn't spin.
 
-Without `transition`, the hover effect snaps instantly — it doesn't look good. Adding this line:
+So in the keyframes, I go from `rotate(0deg)` to `rotate(360deg)`, and the counter-rotation goes from `rotate(0deg)` to `rotate(-360deg)`:
 
 ```css
-transition: transform 0.3s ease;
+@keyframes washOrbit {
+    0% {
+        transform: rotate(0deg) translateY(-15px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateY(-15px) rotate(-360deg);
+    }
+}
 ```
 
-...tells the browser to animate the change over 0.3 seconds using an "ease" timing curve (starts slow, speeds up, then slows down at the end). I also transition `background-color` and `box-shadow` so everything changes together.
+The browser interpolates smoothly between 0 and 360 degrees, which traces out a perfect circle. I set `animation: washOrbit 6s linear infinite` so it loops forever at a constant speed.
+
+### Fixing the Hover Conflict
+
+I ran into another problem — when I tried to add `transform: scale(1.15)` on hover directly to the `img`, it overrode the orbit animation because CSS only allows one `transform` property at a time.
+
+My fix was to put the hover scale on the **parent** `.hero-image` div instead:
+
+```css
+.hero-image {
+    transition: transform 0.5s ease;
+}
+.hero-image:hover {
+    transform: scale(1.15);
+}
+```
+
+Since the scale is on the parent and the orbit is on the child `img`, they don't conflict. The image keeps orbiting while the whole container zooms in smoothly on hover.
 
 ---
 
 ## File Structure
 
 ```
-CSS-7/
-├── index.html          — The page structure (HTML)
-├── styles.css          — All styling and hover animations (CSS)
+CSS-8/
+├── index.html          — Page structure (HTML)
+├── styles.css          — Styling and orbit animation (CSS)
 ├── washingmachine.png  — Hero section image
 └── README.md           — This file
 ```
@@ -75,8 +92,5 @@ CSS-7/
 ## Technologies Used
 
 - HTML5
-- CSS3 (Transforms, Transitions, Flexbox, Grid)
+- CSS3 (Keyframe Animations, Transforms, Transitions, Flexbox, Grid)
 - Google Fonts (Poppins)
-=======
-# CSS-8
->>>>>>> 5c53385fae4b002c2517f8dee9e59daf8c6d0d0f

@@ -122,44 +122,26 @@ body {
     display: flex;
     justify-content: center;
     cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.hero-image:hover {
+    transform: scale(1.15);
 }
 
 .hero-image img {
     width: 430px;
     max-width: 100%;
-    animation: imageanimate 3s ease-in-out infinite alternate;
-    transition: transform 0.5s ease;
+    animation: washOrbit 6s linear infinite;
 }
 
-.hero-image:hover img {
-    transform: scale(1.2);
-}
-
-@keyframes imageanimate {
+@keyframes washOrbit {
     0% {
-        transform: scale(1) translate(0px, 0px);
+        transform: rotate(0deg) translateY(-15px) rotate(0deg);
     }
-
-    25% {
-        transform: scale(1.02) translate(-15px, -15px);
-    }
-
-    50% {
-        transform: scale(1.025) translate(0px, -30px);
-    }
-
-    75% {
-        transform: scale(1.03) translate(15px, -15px);
-    }
-
-    85% {
-        transform: scale(.98) translate(-15px, -10px);
-    }
-
     100% {
-        transform: scale(1) translate(0px, 0px);
+        transform: rotate(360deg) translateY(-15px) rotate(-360deg);
     }
-
 }
 
 
